@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>AJAX 1</title>
+</head>
+<body>
+
+	Enter a search string:
+	<input type="text" id="substring" onchange="getMovies()">
+	<div id="divToChange">?</div>
+
+	<!-- Add the AJAX below in a <script> block -->
+	<script>
+	  	function getMovies(){
+			var n = document.getElementById("substring").value;
+			document.getElementById("substring").value = "";
+			var xhttp = new XMLHttpRequest();
+
+			xhttp.onreadystatechange = function(){
+				if(xhttp.readyState == 4 && xhttp.status == 200){
+					var array = JSON.parse(xhttp.responseText);
+					var str = '<br>';
+
+					str += "Results for the string '" + n + "'<br><br>";
+
+					for(i = 0; i < array.length; i++){
+						str += array[i]['name_year'] + '<br>';
+					}
+					document.getElementById("divToChange").innerHTML = str;
+				}
+			}
+			xhttp.open("GET", "controller.php?substring=" + n, true);
+			xhttp.send();j
+		}
+	</script>
+
+</body>
+</html>
